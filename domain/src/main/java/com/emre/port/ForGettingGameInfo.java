@@ -5,6 +5,6 @@ import com.emre.model.Game;
 
 import java.util.List;
 
-public interface GamePriceProviderPort {
+public interface ForGettingGameInfo {
     List<Game> fetchGames();
 }
