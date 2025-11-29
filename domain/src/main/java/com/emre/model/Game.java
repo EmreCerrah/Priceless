@@ -1,7 +1,6 @@
 package com.emre.model;
 
 import com.emre.valueObject.GameId;
-import com.emre.valueObject.StorePrice;
 
 import java.util.List;
 

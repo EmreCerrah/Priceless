@@ -7,6 +7,7 @@ import com.emre.priceless.infrastructure.persistence.GameJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class GameRepositoryAdapter implements GameRepositoryPort {
@@ -24,8 +25,15 @@ public class GameRepositoryAdapter implements GameRepositoryPort {
     }
 
     @Override
+    public Game getById(UUID id) {
+        GameEntity gameEntity = repo.findById(id.toString()).orElse(null);
+        if(gameEntity == null) return null;
+        return GameEntity.toDomain(gameEntity);
+    }
+
+    @Override
     public void save(Game game) {
-        repo.save(GameEntity.toDomain(game));
+        repo.save(GameEntity.toEntity(game));
     }
 
     @Override

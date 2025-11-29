@@ -1,7 +1,6 @@
 package com.emre.priceless.api.controller;
 
-import com.emre.model.Game;
-import com.emre.priceless.infrastructure.persistence.GameEntity;
+import com.emre.priceless.dto.GameDTO;
 import com.emre.priceless.usecase.service.GameSyncService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +21,7 @@ public class GameController {
     }
 
     @GetMapping
-    public GameEntity getAll(@RequestParam(required = false) String id) {
+    public GameDTO getAll(@RequestParam(required = false) String id) {
         return service.getById(id);
     }
 }

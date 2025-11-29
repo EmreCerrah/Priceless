@@ -3,15 +3,13 @@ package com.emre.priceless.infrastructure.client;
 import com.emre.model.Game;
 import com.emre.port.in.GameFetchPort;
 import com.emre.valueObject.GameId;
-import com.emre.valueObject.StorePrice;
-import org.springframework.context.annotation.Profile;
+import com.emre.model.StorePrice;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-@Profile("epic")
-public class EpicGameClient implements GameFetchPort {
+public class EpicGameClientAdapter implements GameFetchPort {
 
 
     @Override
