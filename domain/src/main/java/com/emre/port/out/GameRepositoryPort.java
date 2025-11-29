@@ -1,4 +1,4 @@
-package com.emre.port;
+package com.emre.port.out;
 
 
 import com.emre.model.Game;

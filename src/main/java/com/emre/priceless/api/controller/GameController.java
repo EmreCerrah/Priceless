@@ -1,12 +1,10 @@
 package com.emre.priceless.api.controller;
 
-import com.emre.priceless.domain.model.Game;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.emre.model.Game;
+import com.emre.priceless.infrastructure.persistence.GameEntity;
+import com.emre.priceless.usecase.service.GameSyncService;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/games")
@@ -18,13 +16,13 @@ public class GameController {
         this.service = service;
     }
 
-    @PostMapping("/sync")
+    @GetMapping("/sync")
     public void sync() {
-        service.sync();
+        service.getInfo();
     }
 
     @GetMapping
-    public List<Game> getAll() {
-        return service.getAll();
+    public GameEntity getAll(@RequestParam(required = false) String id) {
+        return service.getById(id);
     }
 }

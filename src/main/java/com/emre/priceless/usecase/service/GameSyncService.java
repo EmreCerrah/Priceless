@@ -1,8 +1,9 @@
 package com.emre.priceless.usecase.service;
 
-import com.emre.priceless.domain.model.Game;
-import com.emre.priceless.domain.port.GamePriceProviderPort;
-import com.emre.priceless.domain.port.GameRepositoryPort;
+import com.emre.model.Game;
+import com.emre.priceless.infrastructure.client.EpicGameClient;
+import com.emre.priceless.infrastructure.db.GameRepositoryAdapter;
+import com.emre.priceless.infrastructure.persistence.GameEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,42 +11,23 @@ import java.util.List;
 @Service
 public class GameSyncService {
 
-    private final GamePriceProviderPort provider;
-    private final GameRepositoryPort repository;
+    private final EpicGameClient provider;
+    private final GameRepositoryAdapter repository;
 
-    public GameSyncService(GamePriceProviderPort provider,
-                           GameRepositoryPort repository) {
+    public GameSyncService(EpicGameClient provider,
+                           GameRepositoryAdapter repository) {
         this.provider = provider;
         this.repository = repository;
     }
 
-    public void sync() {
-
+    public void getInfo() {
         List<Game> externalGames = provider.fetchGames();
-        List<Game> currentGames = repository.findAll();
-
         for (Game external : externalGames) {
-
-            Game existing = currentGames.stream()
-                    .filter(g -> g.getId().equals(external.getId()))
-                    .findFirst()
-                    .orElse(null);
-
-            if (existing == null) {
-                // yeni oyun → ekle
                 repository.save(external);
-                continue;
-            }
-
-            // fiyat değişmiş mi?
-            if (existing.getPrice() != external.getPrice()) {
-                existing.setPrice(external.getPrice());
-                repository.update(existing);
-            }
         }
     }
 
-    public List<Game> getAll() {
-        return repository.findAll();
+    public GameEntity getById(String id) {
+        return repository.getById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.emre.model;
+package com.emre.valueObject;
 
 public record StorePrice(String storeId,
                          String externalId,
